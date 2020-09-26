@@ -1,46 +1,98 @@
 package com.company;
 
+import java.util.Collections;
+import java.util.Random;
+
 public class Process extends Element {
 
     private int queue, maxqueue, failure;
+    private  int maxParallel;
+
     private double meanQueue;
     private double meanLoad;
+    private double probabilityFailure;
+    private int maxQueueInSimulation = 0;
+    private double maxLoad = 0;
 
-    private double imVidmov;
-    private int maxQueueInSimulation;
+    private Element[] nextElements;
 
-    public Process(double delay) {
+    public Element[] getNextElements() {
+        return nextElements;
+    }
+
+    public void setNextElements(Element[] nextElements) {
+        this.nextElements = nextElements;
+    }
+
+    public Process(double delay, int maxParallel) {
         super(delay);
         queue = 0;
         maxqueue = Integer.MAX_VALUE;
         meanQueue = 0.0;
+        this.maxParallel = maxParallel;
     }
 
     @Override
-    public void inAct() {
-        if (super.getState() == 0) {
-            super.setState(1);
-            super.setTnext(super.getTcurr() + super.getDelay());
+    public void inAct(int count) {
+        double delta = maxParallel - getState();
+        if (count < delta) {
+            setState(count + getState());
+            count = 0;
         } else {
-            if (getQueue() < getMaxqueue()) {
-                setQueue(getQueue() + 1);
+            count = (int) (count - delta);
+            setState(maxParallel);
+
+        }
+        super.setTnext(super.getTcurr() + super.getDelay());
+        if (count > 0) {
+            delta = maxqueue - queue;
+            if (delta > count) {
+                queue = queue + count;
+                count = 0;
             } else {
-                failure++;
+                count = count - (int) delta;
+                queue = maxqueue;
+            }
+            if (count > 0) {
+                failure = failure + count;
             }
         }
+//        if (super.getState() == 0) {
+//            super.setState(1);
+//            super.setTnext(super.getTcurr() + super.getDelay());
+//        } else {
+//            if (getQueue() < getMaxqueue()) {
+//                setQueue(getQueue() + 1);
+//            } else {
+//                failure++;
+//            }
+//        }
     }
 
     @Override
-    public void outAct() {
-        super.outAct();
+    public void outAct(int c) {
+        Random rnd= new Random();
+         super.outAct(1);
         super.setTnext(Double.MAX_VALUE);
-        super.setState(0);
-
-        if (getQueue() > 0) {
+        setState(getState() - 1 );
+        if(getQueue() > 0){
             setQueue(getQueue() - 1);
-            super.setState(1);
+            setState(getState() + 1);
             super.setTnext(super.getTcurr() + super.getDelay());
         }
+        if(nextElements != null && nextElements.length>0){
+            nextElements[rnd.nextInt(nextElements.length)].inAct(1);
+        }
+
+//        super.outAct();
+//        super.setTnext(Double.MAX_VALUE);
+//        super.setState(0);
+//
+//        if (getQueue() > 0) {
+//            setQueue(getQueue() - 1);
+//            super.setState(1);
+//            super.setTnext(super.getTcurr() + super.getDelay());
+//        }
     }
 
     public double getMeanLoad() {
@@ -69,12 +121,12 @@ public class Process extends Element {
         return maxqueue;
     }
 
-    public double getImVidmov() {
-        return imVidmov;
+    public double getProbabilityFailure() {
+        return probabilityFailure;
     }
 
-    public void setImVidmov(double imVidmov) {
-        this.imVidmov = imVidmov;
+    public void setProbabilityFailure(double probabilityFailure) {
+        this.probabilityFailure = probabilityFailure;
     }
 
     public int getMaxQueueInSimulation() {
@@ -102,19 +154,39 @@ public class Process extends Element {
     @Override
     public void doStatistics(double delta) {
         meanQueue = getMeanQueue() + queue * delta;
-        meanLoad = meanLoad + (getState()*delta);
-        if(maxQueueInSimulation < queue){
-            maxQueueInSimulation = queue ;
+        meanLoad = meanLoad + (getState() * delta);
+        if (maxQueueInSimulation < queue) {
+            maxQueueInSimulation = queue;
+        }
+        if(maxLoad < meanLoad){
+            maxLoad = meanLoad;
         }
 
 
     }
-    public void doResultsStatistics(){
-        if(failure != 0 && getQuantity() != 0) {
 
-            imVidmov = (double) failure / getQuantity();
-            meanQueue = meanQueue/getTcurr();
-        }
+    public double getMaxLoad() {
+        return maxLoad;
+    }
+
+    public void setMaxLoad(double maxLoad) {
+        this.maxLoad = maxLoad;
+    }
+
+    public void doResultsStatistics() {
+//        if (failure != 0 && getQuantity() != 0) {
+//
+//            probabilityFailure = (double) failure / getQuantity();
+//            meanQueue = meanQueue / getTcurr();
+//        }
+    }
+
+    public int getMaxParallel() {
+        return maxParallel;
+    }
+
+    public void setMaxParallel(int maxParallel) {
+        this.maxParallel = maxParallel;
     }
 
     public double getMeanQueue() {

@@ -1,7 +1,6 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Model {
 
@@ -18,58 +17,65 @@ public class Model {
 
 
     public void simulate(double time) {
-
+     Statistic statistic = new Statistic();
+     String name = " ";
         while (tcurr < time) {
             tnext = Double.MAX_VALUE;
             for (Element e : list) {
                 if (e.getTnext() < tnext) {
                     tnext = e.getTnext();
                     event = e.getId();
+                    name = e.getName();
 
                 }
             }
-            System.out.println("\nIt's time for event in " +
-                    list.get(event).getName() +
+            System.out.println("\n event in " +
+                    name +
                     ", time =   " + tnext);
-            for (Element e : list) {
+
+           for (Element e : list) {
                 e.doStatistics(tnext - tcurr);
             }
             tcurr = tnext;
             for (Element e : list) {
                 e.setTcurr(tcurr);
             }
-            list.get(event).outAct();
+           // if(event < list.size()) {
+                list.get(event).outAct(1);
+           // }
             for (Element e : list) {
                 if (e.getTnext() == tcurr) {
-                    e.outAct();
+                    e.outAct(1);
                 }
             }
-            printInfo();
+          //  printInfo();
         }
-        printResult();
+        statistic.doStatistics(list);
     }
 
     public void printInfo() {
         for (Element e : list) {
-            e.printInfo();
+          //  e.printInfo();
         }
     }
 
-    public void printResult() {
+//    public void printResult() {
+//
+//        System.out.println("\n-------------RESULTS-------------");
+//
+//        for (Element e : list) {
+//            e.printResult();
+//            if (e instanceof Process) {
+//                Process p = (Process) e;
+//                p.doResultsStatistics();
+//                System.out.println("mean length of queue = " +
+//                        p.getMeanQueue() / tcurr
+//                        + "\nfailure probability  = " +
+//                        p.getProbabilityFailure() + " \nMax Queue " + p.getMaxQueueInSimulation()
+//                        + " Mean Queue " + p.getMeanQueue());
+//            }
+//        }
+//    }
 
-        System.out.println("\n-------------RESULTS-------------");
 
-        for (Element e : list) {
-            e.printResult();
-            if (e instanceof Process) {
-                Process p = (Process) e;
-                p.doResultsStatistics();
-                System.out.println("mean length of queue = " +
-                        p.getMeanQueue() / tcurr
-                        + "\nfailure probability  = " +
-                       p.getImVidmov() + " \nMax Queue " + p.getMaxQueueInSimulation()
-                + " Mean Queue " + p.getMeanQueue());
-            }
-        }
-    }
 }

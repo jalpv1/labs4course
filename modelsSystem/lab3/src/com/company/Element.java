@@ -9,45 +9,47 @@ public class Element {
     private double tcurr;
     private int state;
     private Element nextElement;
-    private static int nextId=0;
+    private static int nextId = 0;
     private int id;
 
 
-    public Element(){
+    public Element() {
 
         tnext = 0.0;
         delayMean = 1.0;
         distribution = "exp";
         tcurr = tnext;
-        state=0;
-        nextElement=null;
+        state = 0;
+        nextElement = null;
         id = nextId;
         nextId++;
-        name = "element"+id;
+        name = "element" + id;
     }
-    public Element(double delay){
+
+    public Element(double delay) {
         name = "anonymus";
         tnext = 0.0;
         delayMean = delay;
         distribution = "";
         tcurr = tnext;
-        state=0;
-        nextElement=null;
+        state = 0;
+        nextElement = null;
         id = nextId;
         nextId++;
-        name = "element"+id;
+        name = "element" + id;
     }
-    public Element(String nameOfElement, double delay){
+
+    public Element(String nameOfElement, double delay) {
         name = nameOfElement;
         tnext = 0.0;
         delayMean = delay;
         distribution = "exp";
         tcurr = tnext;
-        state=0;
-        nextElement=null;
+        state = 0;
+        nextElement = null;
         id = nextId;
         nextId++;
-        name = "element"+id;
+        name = "element" + id;
     }
 
     public double getDelay() {
@@ -63,15 +65,14 @@ public class Element {
                     delay = FunRand.Unif(getDelayMean(),
                             getDelayDev());
                 } else {
-                    if("".equalsIgnoreCase(getDistribution()))
+                    if ("".equalsIgnoreCase(getDistribution()))
                         delay = getDelayMean();
                 }
             }
         }
+
         return delay;
     }
-
-
 
 
     public double getDelayDev() {
@@ -119,11 +120,12 @@ public class Element {
         this.nextElement = nextElement;
     }
 
-    public void inAct() {
+    public void inAct(int c) {
 
     }
-    public void outAct(){
-        quantity++;
+
+    public void outAct(int count) {
+        quantity = quantity + count;
     }
 
     public double getTnext() {
@@ -151,14 +153,14 @@ public class Element {
         this.id = id;
     }
 
-    public void printResult(){
-        System.out.println(getName()+ "  quantity = "+ quantity);
+    public void printResult() {
+       // System.out.println(getName() + "  quantity = " + quantity);
     }
 
-    public void printInfo(){
-        System.out.println(getName()+ " state= " +state+
-                " quantity = "+ quantity+
-                " tnext= "+tnext);
+    public void printInfo() {
+//        System.out.println(getName() + " state= " + state +
+//                " quantity = " + quantity +
+//                " tnext= " + tnext);
     }
 
     public String getName() {
@@ -169,7 +171,7 @@ public class Element {
         this.name = name;
     }
 
-    public void doStatistics(double delta){
+    public void doStatistics(double delta) {
 
     }
 }

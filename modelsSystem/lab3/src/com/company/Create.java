@@ -7,9 +7,9 @@ public class Create extends Element {
     }
 
     @Override
-    public void outAct() {
-        super.outAct();
+    public void outAct(int c) {
+        super.outAct(1);
         super.setTnext(super.getTcurr() + super.getDelay());
-        super.getNextElement().inAct();
+        super.getNextElement().inAct(1);
     }
 }
