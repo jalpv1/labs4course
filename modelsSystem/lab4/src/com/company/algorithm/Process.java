@@ -1,4 +1,4 @@
-package com.company;
+package com.company.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,7 +72,7 @@ public class Process extends Element {
     @Override
     public void outAct(int c) {
         Random rnd= new Random();
-         super.outAct(1);
+        super.outAct(1);
         super.setTnext(Double.MAX_VALUE);
         setState(getState() - 1 );
         if(getQueue() > 0){

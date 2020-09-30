@@ -1,4 +1,4 @@
-package com.company;
+package com.company.algorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +82,7 @@ public class Model {
 
     public void printInfo() {
         for (Element e : list) {
-          //  e.printInfo();
+            //  e.printInfo();
         }
     }
 

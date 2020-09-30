@@ -1,4 +1,6 @@
-package com.company;
+package com.company.algorithm;
+
+import com.company.randomer.FunRand;
 
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class Element {
     private static int nextId = 0;
     private int id;
     private ArrayList<Element> nextElements;
-
+    private int queue;
     public ArrayList<Element> getNextElements() {
         return nextElements;
     }
@@ -134,6 +136,14 @@ public class Element {
 
     }
 
+    public int getQueue() {
+        return queue;
+    }
+
+    public void setQueue(int queue) {
+        this.queue = queue;
+    }
+
     public void outAct(int count) {
         quantity = quantity + count;
     }
@@ -164,7 +174,7 @@ public class Element {
     }
 
     public void printResult() {
-       // System.out.println(getName() + "  quantity = " + quantity);
+        // System.out.println(getName() + "  quantity = " + quantity);
     }
 
     public void printInfo() {
