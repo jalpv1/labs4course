@@ -1,9 +1,10 @@
 package com.company.algorithm;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Statistic {
-    public void doStatistics(ArrayList<Element> list) {
+    public void doStatistics(List<Element> list) {
         System.out.println("id | " + " delay |" + " max parallel |" + " max queue |" + "Mean Queue |" + " Max queue was|" +
                 " Mean PayLoad |" + " Max Payload |" + " Failed prop |");
 

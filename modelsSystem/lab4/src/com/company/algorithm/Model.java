@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Model {
 
-    private ArrayList<Element> list = new ArrayList<>();
+    private List<Element> list = new ArrayList<>();
     double tnext, tcurr;
     int event;
 
-    public Model(ArrayList<Element> elements) {
+    public Model(List<Element> elements) {
         list = elements;
-        tnext = 0.0;
+        tnext = 0.1;
         event = 0;
         tcurr = tnext;
     }

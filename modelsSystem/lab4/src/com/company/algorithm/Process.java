@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class Process extends Element {
+public  class Process extends Element {
 
     private int queue, maxqueue, failure;
     private  int maxParallel;
@@ -14,28 +14,67 @@ public class Process extends Element {
     private double probabilityFailure;
     private int maxQueueInSimulation = 0;
     private double maxLoad = 0;
+    private Element otherProcess;
+    private double delays= 0;
     private ArrayList<Element>  nextElements;
 
     public ArrayList<Element> getNextElements() {
         return nextElements;
     }
 
+    public Element getOtherProcess() {
+        return otherProcess;
+    }
+
+    public Process() {
+    }
+
+    public void setOtherProcess(Element otherProcess) {
+        this.otherProcess = otherProcess;
+    }
+
+    public double getDelays() {
+        return delays;
+    }
+
+    public void setDelays(double delays) {
+        this.delays = delays;
+    }
+
     public void setNextElements(ArrayList<Element> nextElements) {
         this.nextElements = nextElements;
     }
 
-    public Process(double delay, int maxParallel) {
+    public Process(double delay,double delays, int maxParallel) {
         super(delay);
         queue = 0;
         maxqueue = Integer.MAX_VALUE;
         meanQueue = 0.0;
         this.maxParallel = maxParallel;
+        this.delays = delays;
     }
-
+    public Process(double delay,double delays,String name, int maxParallel) {
+        super(delay);
+        queue = 0;
+        maxqueue = Integer.MAX_VALUE;
+        meanQueue = 0.0;
+        this.maxParallel = maxParallel;
+        this.delays = delays;
+        this.setName(name);
+    }
+    public Process(double delay,double delays,String name, String distr) {
+        super(delay);
+        queue = 0;
+        maxqueue = Integer.MAX_VALUE;
+        meanQueue = 0.0;
+        setDistribution(distr);
+        this.delays = delays;
+        this.setName(name);
+    }
     @Override
     public void inAct(int count) {
         double delta = maxParallel - getState();
-        if (count < delta) {
+        if (count < delta && count >0) {
             setState(count + getState());
             count = 0;
         } else {
@@ -68,21 +107,43 @@ public class Process extends Element {
 //            }
 //        }
     }
-
     @Override
-    public void outAct(int c) {
-        Random rnd= new Random();
-        super.outAct(1);
+    public void outAct() {
+        Random rnd = new Random();
+        super.outAct();
         super.setTnext(Double.MAX_VALUE);
-        setState(getState() - 1 );
+        setState(getState() - 1);
+        if (getQueue() - otherProcess.getQueue() >=2) {
+            setQueue(getQueue() - 1);
+           otherProcess.setQueue(otherProcess.getQueue()-1);
+           setTransferedCount(getTransferedCount()+1);
+
+            //setState(getState() + 1);
+           // super.setTnext(super.getTcurr() + super.getDelay());
+        }
         if(getQueue() > 0){
             setQueue(getQueue() - 1);
             setState(getState() + 1);
             super.setTnext(super.getTcurr() + super.getDelay());
         }
-        if(nextElements != null && nextElements.size()>0){
+        if (nextElements != null && nextElements.size() > 0) {
             nextElements.get(rnd.nextInt(nextElements.size())).inAct(1);
         }
+    }
+//    @Override
+//    public void outAct(int c) {
+//        Random rnd= new Random();
+//        super.outAct(1);
+//        super.setTnext(Double.MAX_VALUE);
+//        setState(getState() - 1 );
+//        if(getQueue() > 0){
+//            setQueue(getQueue() - 1);
+//            setState(getState() + 1);
+//            super.setTnext(super.getTcurr() + super.getDelay());
+//        }
+//        if(nextElements != null && nextElements.size()>0){
+//            nextElements.get(rnd.nextInt(nextElements.size())).inAct(1);
+//        }
 
 //        super.outAct();
 //        super.setTnext(Double.MAX_VALUE);
@@ -93,7 +154,6 @@ public class Process extends Element {
 //            super.setState(1);
 //            super.setTnext(super.getTcurr() + super.getDelay());
 //        }
-    }
 
     public double getMeanLoad() {
         return meanLoad;
@@ -102,6 +162,7 @@ public class Process extends Element {
     public void setMeanLoad(double meanLoad) {
         this.meanLoad = meanLoad;
     }
+
 
     public int getFailure() {
         return failure;

@@ -1,25 +1,26 @@
-package com.company.algorithm;
+package com.company.hospital;
 
+import com.company.algorithm.Element;
 import com.company.randomer.FunRand;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Element {
+public class ElementH {
     private String name;
     private double tnext;
     private double delayMean, delayDev;
     private String distribution;
     private int quantity;
     private double tcurr;
-    private int state;
-    private Element nextElement;
+    private List<ElementH> state;
+    private ElementH nextElement;
     private static int nextId = 0;
     private int id;
-    private List<Element> nextElements;
+    private List<ElementH> nextElements;
     private int queue;
     private int transferedCount;
-    public List<Element> getNextElements() {
+    public List<ElementH> getNextElements() {
         return nextElements;
     }
 
@@ -31,50 +32,43 @@ public class Element {
         this.transferedCount = transferedCount;
     }
 
-    public void setNextElements(List<Element> nextElements) {
+    public void setNextElements(List<ElementH> nextElements) {
         this.nextElements = nextElements;
     }
 
-    public Element() {
+    public ElementH() {
 
         tnext = 0.1;
         delayMean = 1.0;
         distribution = "exp";
         tcurr = tnext;
-        state = 0;
+        state = new ArrayList<>();
         nextElement = null;
         id = nextId;
         nextId++;
         name = "element" + id;
     }
 
-    public Element(double delay) {
+    public ElementH(double delay) {
         name = "anonymus";
         tnext = 0.1;
         delayMean = delay;
         distribution = "";
         tcurr = tnext;
-        state = 0;
+        state = new ArrayList<>();
         nextElement = null;
         id = nextId;
         nextId++;
         name = "element" + id;
     }
 
-    public Element(String name, double delayMean, double delayDev, String distribution) {
-        this.name = name;
-        this.delayMean = delayMean;
-        this.delayDev = delayDev;
-        this.distribution = distribution;
-    }
-
-    public Element(String nameOfElement, double delay) {
+    public ElementH(String nameOfElement, double delay) {
         name = nameOfElement;
         tnext = 0.1;
         delayMean = delay;
         distribution = "exp";
         tcurr = tnext;
-        state = 0;
+        state = new ArrayList<>();
         nextElement = null;
         id = nextId;
         nextId++;
@@ -124,9 +118,6 @@ public class Element {
     public int getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public double getTcurr() {
         return tcurr;
@@ -136,39 +127,36 @@ public class Element {
         this.tcurr = tcurr;
     }
 
-    public int getState() {
+    public List<ElementH> getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(List<ElementH> state) {
         this.state = state;
     }
 
-    public Element getNextElement() {
+    public ElementH getNextElement() {
         return nextElement;
     }
 
-    public void setNextElement(Element nextElement) {
+    public void setNextElement(ElementH nextElement) {
         this.nextElement = nextElement;
     }
 
-    public void inAct(int c) {
+    public void inAct(int patientType) {
 
     }
 
-    public int getQueue() {
-        return queue;
-    }
-
-    public void setQueue(int queue) {
-        this.queue = queue;
-    }
+//    public int getQueue() {
+//        return queue;
+//    }
+//
+//    public void setQueue(int queue) {
+//        this.queue = queue;
+//    }
 
     public void outAct(int count) {
         quantity = quantity + count;
-    }
-    public void outAct() {
-        quantity = quantity + 1;
     }
 
     public double getTnext() {
