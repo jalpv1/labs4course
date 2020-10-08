@@ -1,12 +1,16 @@
-package com.company.bank_simulation;
+package com.company.algorithm;
+
+
+import com.company.bank_simulation.Element;
+import com.company.bank_simulation.Process;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Create extends Element {
-    private List<Process> nextElements;
+public class Create2 extends com.company.bank_simulation.Element {
+    private List<com.company.bank_simulation.Process> nextElements;
 
-    public Create(double delay, String name, String distribution, double devDelay) {
+    public Create2(double delay, String name, String distribution, double devDelay) {
         super(delay, name, distribution, devDelay);
         //nextElements = new ArrayList<Process>();
     }
@@ -14,18 +18,24 @@ public class Create extends Element {
     @Override
     public void outAct() {
         super.outAct();
+        //  TNext = TCurrent + GetDelay();
         settNext(gettCurrent() + getDelay());
+        // getNextElements().get(0).inAct(1);
         getNextElement().inAct(1);
     }
-    public void setNextElement(List<Process> nextElements) {
+    public void setNextElement(List<com.company.bank_simulation.Process> nextElements) {
         this.nextElements = nextElements;
     }
 
-    public Process getNextElement() {
+    public com.company.bank_simulation.Process getNextElement() {
         ArrayList<Integer> queue = new ArrayList<>();
+        // nextElements =  getNextElements());
         List<Element> next = getNextElements();
+        //nextElements = (List<Process>) next.stream().filter(x -> x instanceof Process);
         for (var e : nextElements) {
-                queue.add( ((Process) e).getQueueLength());
+            //if(e instanceof Process) {
+            queue.add( ((Process) e).getQueueLength());
+            //  }
         }
         int count = 0;
         int minIndex = 0;
@@ -40,7 +50,6 @@ public class Create extends Element {
                 minIndex = 0;
             }
         }
-        //
         if (queue.stream().mapToInt(x -> x).sum() == 0 || count == queue.size()) {
             return nextElements.get(0);
         } else {

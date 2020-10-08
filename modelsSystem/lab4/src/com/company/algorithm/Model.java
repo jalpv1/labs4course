@@ -76,7 +76,7 @@ public class Model {
             }
             //  printInfo();
         }
-        statistic.doStatistics(list);
+       // statistic.doStatistics(list);
     }
 
 

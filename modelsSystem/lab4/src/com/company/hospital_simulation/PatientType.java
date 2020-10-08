@@ -2,7 +2,6 @@ package com.company.hospital_simulation;
 
 
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class PatientType {

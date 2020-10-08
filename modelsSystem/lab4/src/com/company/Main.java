@@ -1,25 +1,39 @@
 package com.company;
+//                         HOSPITAL
 
-//import com.company.algorithm.Create;
-//import com.company.hospital_simulation.Element;
-//import com.company.algorithm.Model;
-//import com.company.algorithm.Process;
-//import com.company.hospital_simulation.HospitalCreate;
-//import com.company.hospital_simulation.HospitalModel;
-//import com.company.hospital_simulation.HospitalProcess;
-//import com.company.hospital_simulation.*;
+import com.company.algorithm.Create;
+import com.company.hospital_simulation.Element;
+import com.company.algorithm.Model;
+import com.company.algorithm.Process;
+import com.company.hospital_simulation.HospitalCreate;
+import com.company.hospital_simulation.HospitalModel;
+import com.company.hospital_simulation.HospitalProcess;
+import com.company.hospital_simulation.*;
 //
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.Collections;
 //import java.util.List;
-import com.company.bank_simulation.Create;
-import com.company.bank_simulation.Element;
-import com.company.bank_simulation.Model2;
-import com.company.bank_simulation.Process;
+
+// BANK
+
+//import com.company.bank_simulation.Create;
+//import com.company.bank_simulation.Element;
+//import com.company.bank_simulation.Model2;
+//import com.company.bank_simulation.Process;
+//
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
+
+import com.company.algorithm.Create;
+import com.company.algorithm.Create2;
+//import com.company.algorithm.Process;
+import com.company.base_simulation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -75,55 +89,87 @@ public class Main {
 //        model.Simulate(10);
 
 //                         HOSPITAL
-//        var c = new HospitalCreate(10, "CREATOR", "exp", 0);
-//        HospitalProcess p0 = new HospitalProcess(2, 5, "GO TO DOCTOR", "unif", 3);
-//        HospitalProcess p1 = new HospitalProcess(3, 8, "CHAMBERS", "unif", 3);
-//        HospitalProcess d = new HospitalProcess(3, 8, "EXIT", "exp", 3);
-//        HospitalProcess p2 = new HospitalProcess(3, 4.5, "REGISTRATION", "erlang", 4);
-//        Laboratory p3 = new Laboratory(2, 4, "LABORATORY", "erlang", 2);
-//        HospitalProcess p4 = new HospitalProcess(2, 5, "GO TO REGISTRATION", "exp", 3);
-//        Doctor p5 = new Doctor(2, 5, "DOCTOR", "unif", 2);
-//
-//        c.setNextElement( p0);
-//        c.patientsTypes = Arrays.asList(
-//                new PatientType(1, 0.5, ((double)1)/15),
-//                new PatientType(2, 0.1, ((double)1)/40),
-//                new PatientType(3, 0.4, ((double)1)/30));
-//
-//        p0.setNextProcesses(Collections.singletonList(p5));
-//        p5.setNextProcesses(Arrays.asList( p1, p4 ));
-//        p2.setNextProcesses(Collections.singletonList(p3));
-//        p3.setNextProcesses(Arrays.asList( p0, d ));
-//        p4.setNextProcesses(Collections.singletonList(p2));
-//
-//        List<Element> elementsList = Arrays.asList( c, p0, p1, p2, p3, p4, p5, d );
-//        HospitalModel model = new HospitalModel(elementsList);
-//        model.Simulate(1000.0);
+        var c = new HospitalCreate(10, "CREATOR", "exp", 0);
+        HospitalProcess p0 = new HospitalProcess(2, 5, "GO TO DOCTOR", "unif", 3);
+        HospitalProcess p1 = new HospitalProcess(3, 8, "CHAMBERS", "unif", 3);
+        HospitalProcess d = new HospitalProcess(3, 8, "EXIT", "exp", 3);
+        HospitalProcess p2 = new HospitalProcess(3, 4.5, "REGISTRATION", "erlang", 4);
+        Laboratory p3 = new Laboratory(2, 4, "LABORATORY", "erlang", 2);
+        HospitalProcess p4 = new HospitalProcess(2, 5, "GO TO REGISTRATION", "exp", 3);
+        Doctor p5 = new Doctor(2, 5, "DOCTOR", "unif", 2);
+
+        c.setNextElement( p0);
+        c.patientsTypes = Arrays.asList(
+                new PatientType(1, 0.5, ((double)1)/15),
+                new PatientType(2, 0.1, ((double)1)/40),
+                new PatientType(3, 0.4, ((double)1)/30));
+
+        p0.setNextProcesses(Collections.singletonList(p5));
+        p5.setNextProcesses(Arrays.asList( p1, p4 ));
+        p2.setNextProcesses(Collections.singletonList(p3));
+        p3.setNextProcesses(Arrays.asList( p0, d ));
+        p4.setNextProcesses(Collections.singletonList(p2));
+
+        List<Element> elementsList = Arrays.asList( c, p0, p1, p2, p3, p4, p5, d );
+        HospitalModel model = new HospitalModel(elementsList);
+        model.Simulate(1000.0);
 
 
 
 
         // BANK
-        Create c = new Create(0.1, "CREATOR", "Exponential",0.0);
+//        Create c = new Create(0.1, "CREATOR", "Exponential",0.0);
+//
+//        Process p1 = new Process(0.3, "CASHBOX1", "Exponential", 3, 1,0.0);
+//        Process p2 = new Process(0.3, "CASHBOX2", "Exponential", 3, 1,0.0);
+//        Process d = new Process(0.3, "GO OUT", "Exponential", 3, 1,0.0);
+//        p1.setNextProcesses(new ArrayList<>(Arrays.asList(p2,d)));
+//        p2.setNextProcesses(new ArrayList<>(Arrays.asList(p1,d))) ;
+//        p1.OtherProcess = p2;
+//        p2.OtherProcess = p1;
+//        p1.setState(1);
+//        p2.setState(1);
+//        c.settNext(0.5);;
+//        p1.setQueueLength(2) ;
+//        p2.setQueueLength(2) ;
+//        c.setNextElement(new ArrayList<>(Arrays.asList(p1,p2))) ;
+//        List<Element> list = new ArrayList<>(Arrays.asList(c, p1, p2, d));
+//        Model2 model = new Model2(list);
+//        model.Simulate(100.0);
+//        model.ReturnResult();
 
-        Process p1 = new Process(0.3, "CASHBOX1", "Exponential", 3, 1,0.0);
-        Process p2 = new Process(0.3, "CASHBOX2", "Exponential", 3, 1,0.0);
-        Process d = new Process(0.3, "GO OUT", "Exponential", 3, 1,0.0);
-        p1.setNextProcesses(new ArrayList<>(Arrays.asList(p2,d)));
-        p2.setNextProcesses(new ArrayList<>(Arrays.asList(p1,d))) ;
-        p1.OtherProcess = p2;
-        p2.OtherProcess = p1;
-        p1.setState(1);
-        p2.setState(1);
-        c.settNext(0.5);;
-        p1.setQueueLength(2) ;
-        p2.setQueueLength(2) ;
-        c.setNextElement(new ArrayList<>(Arrays.asList(p1,p2))) ;
-        List<Element> list = new ArrayList<>(Arrays.asList(c, p1, p2, d));
-        Model2 model = new Model2(list);
-        model.Simulate(100.0);
-        model.ReturnResult();
-
+//        CreateBase c = new CreateBase(2.0, "CREATOR", "exp",0);
+//        ProcessBase p1 = new ProcessBase(0.6, "PROCESSOR1", "exp", 2, 1,0);
+//        ProcessBase p2 = new ProcessBase(0.3, "PROCESSOR2", "Exponential", 2, 1,0);
+//        ProcessBase p3 = new ProcessBase(0.4, "PROCESSOR3", "Exponential", 2, 1,0);
+//        ProcessBase p4 = new ProcessBase(0.1, "PROCESSOR4", "Exponential", 2, 2,0);
+//        ProcessBase d = new ProcessBase(0, "DISPOSE", "Exponential", 0, 1,0);
+//
+//        c.setNextElement(p1);
+//        p1.setNextProcesses(new ArrayList<>(Arrays.asList(p2, p3, p4)));
+//        p1.setPobabilities(new  ArrayList<>(Arrays.asList(new PobabilityBase(0.15), new PobabilityBase(0.13), new PobabilityBase(0.3))));
+//        p2.setPobabilities(new  ArrayList<>(Arrays.asList(new PobabilityBase(0.15), new PobabilityBase(0.13), new PobabilityBase(0.3))));
+//        p3.setPobabilities(new  ArrayList<>(Arrays.asList(new PobabilityBase(0.15), new PobabilityBase(0.13), new PobabilityBase(0.3))));
+//        p4.setPobabilities(new  ArrayList<>(Arrays.asList(new PobabilityBase(0.15), new PobabilityBase(0.13), new PobabilityBase(0.3))));
+//
+//        p2.setNextProcesses(Arrays.asList(p1));
+//        p3.setNextProcesses (Arrays.asList(p1));
+//        p4.setNextProcesses (Arrays.asList(p1));
+//        List<ElementBase> elementsList = new ArrayList<ElementBase> (Arrays.asList(c, p1, p2, p3, p4));
+//        ModelBase model = new ModelBase(elementsList);
+//        model.Simulate(1000.0);
+//        List<Result> res = model.ReturnResult();
+//
+//        double[] theoreticalAverageQueue = new double[] { 1.786, 0.003, 0.004, 0.00001 };
+//        double[] theoreticalWorkload = new double[] { 0.714, 0.054, 0.062, 0.036 };
+//        double[] queueAccuracy = new double[res.size()];
+//        double[] workloadAccuracy = new double[res.size()];
+//
+//        for (int i = 0; i < theoreticalAverageQueue.length; i++)
+//        {
+//            queueAccuracy[i] = Math.abs(res.get(i).average - theoreticalAverageQueue[i]) / theoreticalAverageQueue[i];
+//            workloadAccuracy[i] = Math.abs(res.get(i).workload - theoreticalWorkload[i]) / theoreticalWorkload[i];
 
     }
 }
+

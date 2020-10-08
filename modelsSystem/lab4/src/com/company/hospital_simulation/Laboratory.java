@@ -23,11 +23,11 @@ public class Laboratory extends HospitalProcess {
             if (patientType == 2) {
                 nextProcess = getNextProcesses().get(0);
                 nextProcess.inAct(patientType);
-                System.out.println("IN FUTURE from " + getName() + " to " + nextProcess.getName() + " t = " + nextProcess.gettNext());
+                System.out.println("going to" + getName() + " to " + nextProcess.getName() + " t = " + nextProcess.gettNext());
             } else if (patientType == 3) {
                 nextProcess = getNextProcesses().get(1);
                 nextProcess.inAct(patientType);
-                System.out.println("IN FUTURE from " + getName() + " to " + nextProcess.getName() + " t = " + nextProcess.gettNext());
+                System.out.println("going to " + getName() + " to " + nextProcess.getName() + " t = " + nextProcess.gettNext());
             }
             settNext(gettCurrent() + getDelay());
         }

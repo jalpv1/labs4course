@@ -39,6 +39,7 @@ public class Doctor extends HospitalProcess{
         {
             for (int i = 0; i < states.size(); i++)
             {
+                //1 type
                 if (states.get(i) == 1)
                 {
                     patientType = states.get(i);
@@ -46,6 +47,8 @@ public class Doctor extends HospitalProcess{
                     break;
                 }
             }
+            //2 3 type
+
             if (patientType == 0)
             {
                 patientType = states.get(0);
@@ -76,7 +79,7 @@ public class Doctor extends HospitalProcess{
             }
             nextProcess.inAct(patientType);
             settNext(gettNext()+ getDelay());
-            System.out.println("IN FUTURE from" + getName() + " to " + nextProcess.getName() + " t = " + nextProcess.gettNext());
+            System.out.println("going to" + getName() + " to " + nextProcess.getName() + " t = " + nextProcess.gettNext());
         }
     }
 

@@ -1,9 +1,14 @@
-package com.company.bank_simulation;
+package com.company.base_simulation;
+
+import com.company.bank_simulation.Channel;
+import com.company.bank_simulation.ChannelComparator2;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Process extends Element {
+public class ProcessBase extends ElementBase {
+
     private int queueLength;
     private int maxQueueLength;
     private int failure;
@@ -16,15 +21,16 @@ public class Process extends Element {
     private double averageAmount;
     private double maxWorkload;
     private int maxParallel;
-    private List<Process> NextProcesses;
+    private List<ProcessBase> NextProcesses;
+    private ArrayList<PobabilityBase> pobabilities;
 
     public Random random = new Random();
     public List<Channel> channels;
     public int NumberOfTasks;
     public int TransferedCount;
-    public Process OtherProcess;
+    public ProcessBase OtherProcess;
 
-    public Process() {
+    public ProcessBase() {
         NextProcesses = new ArrayList<>();
         queueLength = 0;
         averageQueue = 0.0;
@@ -32,8 +38,8 @@ public class Process extends Element {
         averageWorkload = 0;
     }
 
-    public Process(double delay, String name, String distribution, int maxQueueLength, int maxParallel, double devDelay) {
-        super(delay, name, distribution, devDelay);
+    public ProcessBase(double delay, String name, String distribution, int maxQueueLength, int maxParallel, double devDelay) {
+        super( name, delay, devDelay , distribution);
         NextProcesses = new ArrayList<>();
         queueLength = 0;
         this.maxQueueLength = maxQueueLength;
@@ -43,7 +49,7 @@ public class Process extends Element {
         this.maxParallel = maxParallel;
         channels = new ArrayList<>();
         NumberOfTasks = 1;
-        OtherProcess = new Process();
+        OtherProcess = new ProcessBase();
         for (int i = 0; i < maxParallel; i++) {
             channels.add(new Channel("Name->Channel " + i + 1, 0.0, true));
         }
@@ -60,7 +66,7 @@ public class Process extends Element {
             numberOfTasks -= numberOfFreeDevices;
             setState(maxParallel);
         }
-        settNext(gettCurrent() + getDelay());
+        setTnext(getTcurr() + getDelay());
 
         if (numberOfTasks > 0) {
             int numberOfFreePlaces = maxQueueLength - queueLength;
@@ -94,7 +100,7 @@ public class Process extends Element {
 
             for (int i = 0; i < channels.size(); i++) {
                 if (channels.get(i).isFree) {
-                    channels.get(i).timeOut = gettCurrent() + getDelay();
+                    channels.get(i).timeOut = getTcurr() + getDelay();
                     channels.get(i).isFree = false;
                     System.out.println(channels.get(i).name + " is busy and will be free in t = " + channels.get(i).timeOut);
                     count++;
@@ -107,7 +113,7 @@ public class Process extends Element {
         } else if (NumberOfTasks > numberOfFreeDevices) {
             for (int i = 0; i < channels.size(); i++) {
                 if (channels.get(i).isFree) {
-                    channels.get(i).timeOut = gettCurrent() + getDelay();
+                    channels.get(i).timeOut = getTcurr() + getDelay();
                     channels.get(i).isFree = false;
                     System.out.println(channels.get(i).name + " is busy and will be free in t = " + channels.get(i).timeOut);
                     count++;
@@ -120,24 +126,50 @@ public class Process extends Element {
     @Override
     public void outAct() {
         super.outAct();
-        settNext(Double.MAX_VALUE);
+
+        setTnext(Double.MAX_VALUE);
         setState(getState() - 1);
-        if (queueLength - OtherProcess.queueLength >= 2) {
-            queueLength--;
-            OtherProcess.queueLength++;
-            TransferedCount += 1;
+        if (queueLength  >= 0) {
+            queueLength++;
+            setState(getState() + 1);
+            setTnext(getTcurr() + getDelay());
         }
+
+
+        if (NextProcesses.size() != 0 && getState() != -1)
+        {
+
+            if (pobabilities.size() > 1)
+            {
+                int index = RandomBase.RandomProbability(pobabilities);
+                if (index < NextProcesses.size()){
+                    ProcessBase nextProcess = NextProcesses.get(index);
+
+                }
+                else {
+                    ProcessBase nextProcess = NextProcesses.get(0);
+                    index = 0;
+
+                }
+                ProcessBase nextProcess = NextProcesses.get(index);
+                if(nextProcess != null)
+                    nextProcess.inAct(1);
+               System.out.println("going to "+ getName()+ " to " + nextProcess. getName() + " t = "+ nextProcess.getTnext());
+            }
+        }
+
+
         if (queueLength > 0) {
             queueLength--;
             setState(getState() - 1);
-            settNext(gettCurrent() + getDelay());
+            setTnext(getTcurr() + getDelay());
         }
         if (NextProcesses.size() != 0 && getState() != -1) {
             int index = random.nextInt(NextProcesses.size());
-            Process nextProcess = NextProcesses.get(index);
+            ProcessBase nextProcess = NextProcesses.get(index);
             if (nextProcess != null)
                 nextProcess.inAct(1);
-            System.out.println("going to " + getName() + "to " + nextProcess.getName() + "t = " + nextProcess.gettNext());
+            System.out.println("going to " + getName() + "to " + nextProcess.getName() + "t = " + nextProcess.getTnext());
         }
     }
 
@@ -147,7 +179,6 @@ public class Process extends Element {
         System.out.println("failure = " + failure);
     }
 
-    @Override
     public void countStatistics(double delta) {
         averageQueue += queueLength * delta;
         averageProcessingTime += delta;
@@ -257,11 +288,11 @@ public class Process extends Element {
         this.maxParallel = maxParallel;
     }
 
-    public List<Process> getNextProcesses() {
+    public List<ProcessBase> getNextProcesses() {
         return NextProcesses;
     }
 
-    public void setNextProcesses(List<Process> nextProcesses) {
+    public void setNextProcesses(List<ProcessBase> nextProcesses) {
         NextProcesses = nextProcesses;
     }
 
@@ -297,12 +328,19 @@ public class Process extends Element {
         TransferedCount = transferedCount;
     }
 
-    public Process getOtherProcess() {
+    public ProcessBase getOtherProcess() {
         return OtherProcess;
     }
 
-    public void setOtherProcess(Process otherProcess) {
+    public void setOtherProcess(ProcessBase otherProcess) {
         OtherProcess = otherProcess;
     }
-}
 
+    public ArrayList<PobabilityBase> getPobabilities() {
+        return pobabilities;
+    }
+
+    public void setPobabilities(ArrayList<PobabilityBase> pobabilities) {
+        this.pobabilities = pobabilities;
+    }
+}

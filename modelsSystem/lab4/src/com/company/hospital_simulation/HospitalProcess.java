@@ -119,7 +119,7 @@ public class HospitalProcess extends Element {
             HospitalProcess nextProcess = nextProcesses.get(index);
             nextProcess.inAct(patientType);
             settNext(gettCurrent() + getDelay());
-            System.out.println("IN FUTURE from "+getName()+" to" + nextProcess.getName() + " t = " + nextProcess.gettNext());
+            System.out.println("going to "+getName()+" to" + nextProcess.getName() + " t = " + nextProcess.gettNext());
         }
     }
     public List<Channel> outChannel(double t)
