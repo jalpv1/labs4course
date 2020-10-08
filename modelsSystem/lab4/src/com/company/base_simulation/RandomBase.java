@@ -61,15 +61,6 @@ public class RandomBase
     public static int RandomProbability(ArrayList<PobabilityBase> probabilities)
     {
         Random random = new Random();
-        //int x = 0;
-        //int a = random.Next(0, 100);
-        //for (int i = 0; i < probabilities.Count; i++)
-        //{
-        //    if (a >= probabilities[i].MinProbability && a <= probabilities[i].MaxProbability)
-        //    {
-        //        x = i;
-        //    }
-        //}
         var vers = new double[probabilities.size()];
         double sum = probabilities.stream().mapToDouble(x -> x.maxProbability).sum();
         vers[0] = probabilities.get(0).maxProbability / sum;

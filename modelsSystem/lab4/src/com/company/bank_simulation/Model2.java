@@ -99,9 +99,6 @@ public class Model2 {
                 p.setAverageProcessingTime(p.getAverageProcessingTime() / p.getQuantity());
                 p.setProbabilityFailure(p.getFailure() / (double) (p.getQuantity() + p.getFailure()));
                 p.setAverageWorkload(p.getAverageWorkload() / tCurrent);
-                //Console.WriteLine($"Delay = {p.AverageDelay} QLength = {p.MaxQueueObserved} MaxParallel = {p.MaxParallel} AvgQLength = {p.AverageQueue} " +
-                //$"MaxQLength = {p.MaxQueueObserved} AvgWorkload = {p.AverageWorkload} MaxWorkload = {p.MaxWorkload} AvgProcTime = {p.AverageProcessingTime}" +
-                //$" Failure = {p.Failure} PFailure = {p.ProbabilityFailure}    AvgQTime = {p.AverageQueueTime}");
 
                 System.out.println("mean length of queue = " + p.getAverageQueue());
                 System.out.println("max observed queue length = " + p.getMaxQueueObserved());

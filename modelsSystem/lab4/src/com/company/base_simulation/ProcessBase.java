@@ -4,6 +4,7 @@ import com.company.bank_simulation.Channel;
 import com.company.bank_simulation.ChannelComparator2;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class ProcessBase extends ElementBase {
     private int maxParallel;
     private List<ProcessBase> NextProcesses;
     private ArrayList<PobabilityBase> pobabilities;
+    private ArrayList<Integer> priority;
 
     public Random random = new Random();
     public List<Channel> channels;
@@ -141,13 +143,14 @@ public class ProcessBase extends ElementBase {
 
             if (pobabilities.size() > 1)
             {
-                int index = RandomBase.RandomProbability(pobabilities);
-                if (index < NextProcesses.size()){
+                //int index = RandomBase.RandomProbability(pobabilities);
+                int index = findIndex();
+                if (index < NextProcesses.size() && index >0){
                     ProcessBase nextProcess = NextProcesses.get(index);
-
                 }
                 else {
-                    ProcessBase nextProcess = NextProcesses.get(0);
+                  //  ArrayList<Integer> copyPriority()
+                    ProcessBase nextProcess = NextProcesses.stream().min(Comparator.comparingInt(x->x.queueLength)).get();
                     index = 0;
 
                 }
@@ -172,7 +175,54 @@ public class ProcessBase extends ElementBase {
             System.out.println("going to " + getName() + "to " + nextProcess.getName() + "t = " + nextProcess.getTnext());
         }
     }
+    public boolean check (int index){
+        if(index < NextProcesses.size()) {
+            ProcessBase processBase = NextProcesses.get(index);
+            if (processBase.NumberOfTasks < processBase.maxParallel) {
+                return true;
+            }
+        }
+       return false;
+    }
+    public int findIndex(){
+        int index = -7;
+        ArrayList<Integer> priorityCopy = new ArrayList<>(priority);
+        while (priorityCopy.size()!= 0 ) {
+             index = findMaxIndex2(priorityCopy);
+            if (check(index)) {
+                return index;
+            } else {
 
+                priorityCopy.remove(index);
+//                index = findMaxIndex();
+//                return index
+
+            }
+        }
+        return index;
+    }
+   public  int findMaxIndex(){
+        int max  = 0;
+        int maxIndex = 0;
+        for (int i = 0 ; i < priority.size(); i++){
+            if(max < priority.get(i)){
+                max = priority.get(i);
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+   }
+    public  int findMaxIndex2(ArrayList<Integer> copy){
+        int max  = 0;
+        int maxIndex = 0;
+        for (int i = 0 ; i < copy.size(); i++){
+            if(max < copy.get(i)){
+                max = copy.get(i);
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
     @Override
     public void printInfo() {
         super.printInfo();
@@ -342,5 +392,13 @@ public class ProcessBase extends ElementBase {
 
     public void setPobabilities(ArrayList<PobabilityBase> pobabilities) {
         this.pobabilities = pobabilities;
+    }
+
+    public ArrayList<Integer> getPriority() {
+        return priority;
+    }
+
+    public void setPriority(ArrayList<Integer> priority) {
+        this.priority = priority;
     }
 }

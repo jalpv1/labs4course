@@ -131,7 +131,6 @@ public class HospitalModel {
             types.set(i, types.get(i) / quantities.get(i));
             System.out.println("Average time in the hospital of type " + (i + 1) + " is " + types.get(i));
         }
-        //Console.WriteLine($"Average time in the hospital is {AverageTime}");
         System.out.println("Avg trip from doctor to lab duration is " + timeBetweenLab);
     }
 }

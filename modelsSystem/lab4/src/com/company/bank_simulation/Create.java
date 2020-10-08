@@ -29,6 +29,7 @@ public class Create extends Element {
         }
         int count = 0;
         int minIndex = 0;
+        int index = 0;
         int min = 10000;
         for (int i = 0; i < queue.size() - 1; i++) {
             if (queue.get(i).equals(queue.get(0))) {
@@ -38,6 +39,7 @@ public class Create extends Element {
         for (int i = 1; i < queue.size() - 1; i++) {
             if (queue.get(i) < min) {
                 minIndex = 0;
+                index = i;
             }
         }
         //

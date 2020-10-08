@@ -70,15 +70,6 @@ public class FunRand {
 
     public static  int randomProbability(List<Probability> probabilities)
     {
-        //int x = 0;
-        //int a = random.Next(0, 100);
-        //for (int i = 0; i < probabilities.Count; i++)
-        //{
-        //    if (a >= probabilities[i].MinProbability && a <= probabilities[i].MaxProbability)
-        //    {
-        //        x = i;
-        //    }
-        //}
         List<Double> vers = new ArrayList<>();
         for (int i = 0; i < probabilities.size(); i++) {
             vers.add(0.0);
