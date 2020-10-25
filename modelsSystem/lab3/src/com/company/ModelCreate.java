@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ModelCreate {
     public Model createModel(int q,int parallel,double d){
@@ -27,16 +28,16 @@ public class ModelCreate {
         p3.setDistribution("exp");
         p4.setDistribution("exp");
 
-//        p1.setNextElements(new Process[]{p2, p3});
-//        p3.setNextElements(new Process[]{p4});
-//        ArrayList<Element> list = new ArrayList<>();
-//        list.add(c);
-//        list.add(p1);
-//        list.add(p2);
-//        list.add(p3);
-//        list.add(p4);
-//        Model model1 = new Model(list);
-//        model1.simulate(100.0);
+        p1.setNextElements(new ArrayList(Arrays.asList(new Process[]{p2, p3})));
+        p3.setNextElements(new ArrayList(Arrays.asList(new Process[]{p4})));
+        ArrayList<Element> list = new ArrayList<>();
+        list.add(c);
+        list.add(p1);
+        list.add(p2);
+        list.add(p3);
+        list.add(p4);
+        Model model1 = new Model(list);
+        model1.simulate(100.0,c);
      return null;
     }
 }

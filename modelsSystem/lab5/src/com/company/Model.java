@@ -22,7 +22,7 @@ public class Model {
 
     public void Simulate(double timeModeling) {
         int prev = -1;
-
+        long m = System.currentTimeMillis();
         while (tCurrent < timeModeling) {
             tNext = Double.MAX_VALUE;
 
@@ -57,9 +57,11 @@ public class Model {
             prev = event;
         }
         PrintResult();
+        System.out.println(" time =" + (double) (System.currentTimeMillis() - m));
+
     }
 
-    public void ManageChannels() {
+        public void ManageChannels() {
         List<Channel> channels = new ArrayList<>();
         List<Channel> outChannels = new ArrayList<>();
         if (list.get(event) instanceof Process && !list.get(event).getName().equals("DISPOSE")) {
@@ -85,6 +87,7 @@ public class Model {
             e.printInfo();
         }
     }
+
 
     public void PrintResult() {
       //  System.out.println("\n-------------RESULTS-------------");

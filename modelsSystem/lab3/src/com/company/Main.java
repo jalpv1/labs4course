@@ -7,68 +7,69 @@ public class Main {
 
     public static void main(String[] args) {
         // Task 5
-        Create c = new Create(2.0);
-        Process p1 = new Process(1.0, 2);
-        Process p2 = new Process(4.0, 1);
-        Process p3 = new Process(1.2, 1);
-        Process p4 = new Process(1.2, 1);
-        Despose despose = new Despose();
-        Despose despose2 = new Despose();
+//        Create c = new Create(2.0);
+//        Process p1 = new Process(1.0, 2);
+//        Process p2 = new Process(4.0, 1);
+//        Process p3 = new Process(1.2, 1);
+//        Process p4 = new Process(1.2, 1);
+//        Despose despose = new Despose();
+//        Despose despose2 = new Despose();
+//
+//        //   System.out.println("id0 = " + c.getId() + "   id1=" + p1.getId());
+//        c.setNextElement(p1);
+//        p1.setMaxqueue(5);
+//        p2.setMaxqueue(3);
+//        p3.setMaxqueue(2);
+//        p4.setMaxqueue(2);
+//        c.setName("c");
+//        p1.setName("p1");
+//        p2.setName("p2");
+//        p3.setName("p3");
+//        p4.setName("p4");
+//        despose.setName("d1");
+//        despose2.setName("d2");
+//
+//        c.setDistribution("exp");
+//        p1.setDistribution("exp");
+//        p2.setDistribution("exp");
+//        //  p3.setDistribution("exp");
+//        ArrayList<Element> cnexts = new ArrayList<>(Arrays.asList(p1));
+//
+//        ArrayList<Element> p1nexts = new ArrayList<>(Arrays.asList(p2, p3));
+//       // ArrayList<Element> p2nexts = new ArrayList<>(Arrays.asList(despose));
+//        ArrayList<Element> p3nexts = new ArrayList<>(Arrays.asList(p4));
+//        ArrayList<Element> p4nexts = new ArrayList<>(Arrays.asList(p1));
+//        c.setNextElements(cnexts);
+//
+//        p1.setNextElements(p1nexts);
+//        p3.setNextElements(p3nexts);
+//        p4.setNextElements(p4nexts);
+//    //    p2.setNextElements(p2nexts);
+//
+//        ArrayList<Element> list = new ArrayList<>();
+//        list.add(c);
+//        list.add(p1);
+//        list.add(p2);
+//        list.add(p3);
+//        list.add(p4);
+//
+//        Model model2 = new Model(list);
+//        model2.simulate(1000.0,c);
+//    }
+//}
+        //Task 6
+        ModelCreate modelCreate = new ModelCreate();
+        for (int i = 1; i < 5; i++) {
+            try {
+                Model m = modelCreate.createModel(1, 1, i);
+               //m.simulate(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        //   System.out.println("id0 = " + c.getId() + "   id1=" + p1.getId());
-        c.setNextElement(p1);
-        p1.setMaxqueue(5);
-        p2.setMaxqueue(3);
-        p3.setMaxqueue(2);
-        p4.setMaxqueue(2);
-        c.setName("c");
-        p1.setName("p1");
-        p2.setName("p2");
-        p3.setName("p3");
-        p4.setName("p4");
-        despose.setName("d1");
-        despose2.setName("d2");
-
-        c.setDistribution("exp");
-        p1.setDistribution("exp");
-        p2.setDistribution("exp");
-        //  p3.setDistribution("exp");
-        ArrayList<Element> cnexts = new ArrayList<>(Arrays.asList(p1));
-
-        ArrayList<Element> p1nexts = new ArrayList<>(Arrays.asList(p2, p3));
-       // ArrayList<Element> p2nexts = new ArrayList<>(Arrays.asList(despose));
-        ArrayList<Element> p3nexts = new ArrayList<>(Arrays.asList(p4));
-        ArrayList<Element> p4nexts = new ArrayList<>(Arrays.asList(p1));
-        c.setNextElements(cnexts);
-
-        p1.setNextElements(p1nexts);
-        p3.setNextElements(p3nexts);
-        p4.setNextElements(p4nexts);
-    //    p2.setNextElements(p2nexts);
-
-        ArrayList<Element> list = new ArrayList<>();
-        list.add(c);
-        list.add(p1);
-        list.add(p2);
-        list.add(p3);
-        list.add(p4);
-
-        Model model2 = new Model(list);
-        model2.simulate(1000.0,c);
+        }
     }
 }
-        //Task 6
-//            ModelCreate modelCreate = new ModelCreate();
-//            for (int i = 1; i < 5; i++){
-//                    try {
-//                            Model m = modelCreate.createModel(1, 1,i);
-//                            m.simulate(1000);
-//                    }
-//                    catch (Exception e){
-//                            e.printStackTrace();
-//                    }
-//
-//            }
 //            Create c2 = new Create(2.0);
 //            Process p12 = new Process(1.0, 1);
 //            Process p22 = new Process(1.0, 1);
