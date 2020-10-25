@@ -41,7 +41,6 @@ def compare_alternatives(a1, a2):
     return result
 
 
-# формуємо множину векторів сигма попарним порівнянням альтернатив
 def sigma(matrix):
     alternatives = np.array(matrix)
     result = [[0] * 20 for i in range(20)]
@@ -79,8 +78,6 @@ def domMaxP(m):
             maxP.append(i + 1)
     return maxP
 
-
-# найбільші по R
 def domMaxR(m):
     matrix = np.array(m)
     maxR = []
@@ -103,7 +100,6 @@ def blockMaxP(m):
     return maxP
 
 
-# максимальні по R
 def blockMaxR(m):
     matrix = np.array(m)
     sym = I(matrix)
@@ -117,7 +113,6 @@ def blockMaxR(m):
     return maxR, strong_max
 
 
-# перевірка на симетричність
 def symetricCheck(matrix):
     sym = I(np.array(matrix))
     indicator = False
@@ -128,9 +123,7 @@ def symetricCheck(matrix):
     return indicator
 
 
-# виведення найбільших/максимальних елементів
 def printMaxElement(matrix):
-    # якщо симетрична частиа наявна - найбільші та максимальні по R
     if symetricCheck(matrix):
         m, sm = domMaxR(matrix)
         if len(m) > 0:
@@ -140,7 +133,6 @@ def printMaxElement(matrix):
             m, sm = blockMaxR(matrix)
             print("Max  R - {}".format(m))
             print("strong max  R- {}".format(sm))
-    # якщо симетрична частина відсутня - найбільші та максимальні по Р
     else:
         if len(domMaxP(matrix)) > 0:
             print("the biggest Р - {}".format(domMaxP(matrix)))
@@ -152,7 +144,6 @@ def paretoCheckV(vector):
     check = np.array(vector)
     indicator = True
     for i in range(0, len(check)):
-        # усі елементи сигма-вектора невід'ємні
         if check[i] >= 0:
             pass
         else:
@@ -162,7 +153,6 @@ def paretoCheckV(vector):
     else:
         indicator = True
         for i in range(0, len(check)):
-            # усі елементи сигма-вектора недодатні
             if check[i] <= 0:
                 pass
             else:
@@ -170,7 +160,6 @@ def paretoCheckV(vector):
         if indicator:
             return 2
         else:
-            # сигма вектор містить як від'ємні, так і невід'ємні компоненти
             return 3
 
 
@@ -182,17 +171,14 @@ def pareto(sigmaVectors):
     for i in range(0, len(vectorsMatrix)):
         for j in range(i + 1, len(vectorsMatrix)):
             flag = paretoCheckV(vectorsMatrix[i][j])
-            # якщо елементи вектора невід'ємні - пара альтернатив належить відношенню, симетрична не належить
             if flag == 1:
                 resultMatrix[i][j] = 1
                 resultMatrix[j][i] = 0
                 continue
-            # якщо елементи вектора недодатні - пара альтернатив не належить відношенню, симетрична належить
             elif flag == 2:
                 resultMatrix[i][j] = 0
                 resultMatrix[j][i] = 1
                 continue
-            # інакше відношення та симетричне йому не належать множині
             elif flag == 3:
                 resultMatrix[i][j] = 0
                 resultMatrix[j][i] = 0
@@ -215,7 +201,6 @@ def majority(sigmaVectors):
     resultMatrix = [[0] * 20 for i in range(20)]
     for i in range(0, len(vectorsMatrix)):
         for j in range(i, len(vectorsMatrix)):
-            # якщо сума елементів сигма-вектора > 0 - пара альтернатив належить відношенню, симетричне не належить
             if vectorsMatrix[i][j].sum() > 0:
                 resultMatrix[i][j] = 1
                 resultMatrix[j][i] = 0
@@ -243,7 +228,6 @@ printMaxElement(majority(s_v))
 majority(s_v)
 
 
-# строге впорядкування критеріїв у векторі відповідно до варіанту
 def sortStrongOrder(a):
     ordered = np.arange(len(a))
     # k4>k11>k3>k9>k5>k1>k7>k2>k12>k10>k6>k8
@@ -253,7 +237,6 @@ def sortStrongOrder(a):
     return ordered
 
 
-# впорядкування критеріїв у всіх векторах
 def sortSigmaVectors(sigmaVectors):
     vectorVatrix = np.array(sigmaVectors)
     sortedMatrix = [[0] * 20 for i in range(20)]
@@ -270,20 +253,16 @@ def lexicographic(matrix):
         result_matrix[i][i] = 0
     for i in range(0, len(sorted_vectors)):
         for j in range(i + 1, len(sorted_vectors)):
-            # Розглядаємо сигма-вектор для пари альтернатив ai aj
             a = sorted_vectors[i][j]
             for k in range(0, len(a)):
-                # якщо ai переважає aj за критерієм k, пара ai aj належить відношенню, симетрична не належить
                 if a[k] == 1:
                     result_matrix[i][j] = 1
                     result_matrix[j][i] = 0
                     break
-                # якщо aj переважає ai за критерієм k, пара ai aj не належить відношенню, симетрична належить
                 elif a[k] == -1:
                     result_matrix[i][j] = 0
                     result_matrix[j][i] = 1
                     break
-                # якщо альтернативи рівні за критерієм, переходимо до менш важливого критерію
                 else:
                     continue
     f = open("lexicographic.txt", "w")
@@ -300,13 +279,13 @@ printMaxElement(lexicographic(sortSigmaVectors(s_v)))
 lexicographic(sortSigmaVectors(s_v))
 
 
-# {k5,k8,k11,k12} < {k3,k4} < {k1,k2,k6,k7,k9,k10}
-
 #
 def setVectors(a):
-    first = np.array([0, 0, 0, 0, a[4], 0, 0, a[7], 0, 0, a[10], a[11]])
-    second = np.array([0, 0, a[2], a[3], 0, 0, 0, 0, 0, 0, 0, 0])
-    third = np.array([a[0], a[1], 0, 0, 0, a[5], a[6], 0, a[8], a[9], 0, 0])
+    #{k1,k3,k6} < {k9,k10} < {k2,k4,k5,k7,k8,k11,k12}
+
+    first = np.array([ a[0], 0, 0,  a[3], 0,  a[5], 0, 0, 0, 0, 0, 0])
+    second = np.array([0, 0, 0, 0, 0, 0, 0, 0,  a[8],  a[9], 0, 0])
+    third = np.array([0,0,  a[1],  a[4],  a[5], 0, a[6],  a[7], 0, 0,  a[10],  a[11]])
     return first, second, third
 
 
@@ -324,19 +303,15 @@ def divVectorsIntoClasses(sigma_vectors):
 
 
 def berezovskiy(sigma_vectors):
-    # Pb1, Ib1, Nb1
     iter1_p = [[0] * 20 for i in range(20)]
     iter1_i = [[0] * 20 for i in range(20)]
     iter1_n = [[0] * 20 for i in range(20)]
-    # Pb2 (результуюче відношення)
     result_matrix = [[0] * 20 for i in range(20)]
-    # розбиваємо критерії на класи. с1 - найменш важливий
     c1, c2, c3 = divVectorsIntoClasses(s_v)
     pareto1 = np.array(pareto(c1))
     pareto2 = np.array(pareto(c2))
     pareto3 = np.array(pareto(c3))
-    # виділяємо для кожного класу симетричну, асиметричну та непорівнювану частини відношення Парето
-    # I01, P01, N01 (приймаємо за Ib0, Pb0, Nb0)
+
     i1 = I(pareto1)
     p1 = P(pareto1)
     n1 = N(pareto1)
