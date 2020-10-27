@@ -93,7 +93,6 @@ public class Main {
 //        List<Element> elementsList = new ArrayList<Element>(Arrays.asList(c, p1, p2, p3, p4));
 //        Model model = new Model(elementsList);
 //        model.Simulate(1000.0);
-      System.out.println(theoreticalEstimate2(400, 900));  ;
 
     }
 
@@ -109,10 +108,6 @@ public class Main {
     }
 
 
-    static double theoreticalEstimate2(int q, int l) {
-        return 262 /
-                (Math.sqrt(1 + (7.66 * Math.pow(10, -5) * (Math.pow(l, 3) / q)) - 1));
-    }
 
 
     public static void printResults(double estimate, int n) {
