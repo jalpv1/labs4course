@@ -1,13 +1,13 @@
 package com.company;
 
-public class Position {
+public class Place {
     public int markersCount;
     public int markersMin = 0;
     public int markersMax = 0;
     public double markersAvarage = 0.0;
     public String name;
 
-    public Position(String name, int markersCount)
+    public Place(String name, int markersCount)
     {
         this.name = name;
         this.markersCount = markersCount;
@@ -19,10 +19,12 @@ public class Position {
 
     public void markersStatistic()
     {
-        if (markersCount < markersMin)
+        if (markersCount < markersMin){
             markersMin = markersCount;
-        if (markersCount > markersMax)
+        }
+        if (markersCount > markersMax){
             markersMax = markersCount;
+        }
         markersAvarage += markersCount;
     }
 }

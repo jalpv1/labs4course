@@ -7,10 +7,10 @@ public class Arc {
     public int multiplicity;
     public String name;
 
-    public Arc(String name, Place next, int multiplicity)
+    public Arc(String name, Place placeTo, int multiplicity)
     {
         this.name = name;
-        placeTo = next;
+        this.placeTo = placeTo;
         this.multiplicity = multiplicity;
     }
 

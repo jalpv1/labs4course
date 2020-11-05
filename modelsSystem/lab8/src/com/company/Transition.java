@@ -3,6 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Transition {
     public List<Arc> arcsInComming = new ArrayList<>();
@@ -28,49 +29,11 @@ public class Transition {
                 break;
             }
         }
-        return canTransit;
+//        List<Place> canTransitPlaces =connectedPlaces.stream()
+//                .filter(x-> x.markersCount>arcsInComming.get(arcsInComming.indexOf(x)).multiplicity).collect(Collectors.toList());
+//
+         return canTransit;
     }
-//
-//    public List<Place> doTransaction(List<Place> places, boolean ver) {
-//        if (ver) {
-//            System.out.println("Transition : " + name);
-//            System.out.println("Takes markers from: ");
-//        }
-//        for (Arc arc : arcsIn) {
-//            Place place = places.get(0);
-//
-//            for (Place po : places){
-//                if (arc.placeFrom != null) {
-//                    if (po.name.equals(arc.placeFrom.name)) {
-//                        place = po;
-//                        break;
-//                    }
-//                }
-//            }
-//            place.markersCount -= arc.multiplicity;
-//            if (ver)
-//                System.out.println("from name " + arc.placeFrom.name);
-//        }
-//        if (ver) {
-//            System.out.println("Sends markers to: ");
-//        }
-//        for (Arc arc : arcsOut) {
-//            Place place = places.get(0);
-//            for (Place po : places){
-//                if (arc.placeFrom != null) {
-//                    if (po.name.equals(arc.placeFrom.name)) {
-//                        place = po;
-//                        break;
-//                    }
-//                }
-//            }
-//            place.markersCount +=  arc.multiplicity;
-//            if (ver)
-//                System.out.println("place to name " + arc.placeTo.name);
-//        }
-//        return places;
-//
-//    }
 
     public List<Place> doTransition(List<Place> places, boolean doVerification) {
         if (doVerification) {

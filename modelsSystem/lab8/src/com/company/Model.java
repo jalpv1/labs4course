@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Model {
-    public List<Place> places = new ArrayList<>();
-    public List<Transition> transitions = new ArrayList<Transition>();
+    public List<Place> places ;
+    public List<Transition> transitions;
     public List<Transition> nextTransitions = new ArrayList<Transition>();
     Random random = new Random();
 
@@ -31,6 +31,9 @@ public class Model {
                     nextTransitions.add(transition);
                 }
             }
+            if (nextTransitions.size() == 0) {
+                break;
+            }
             for (var transition : nextTransitions) {
                 transition.choiceProbability = (double) 1 / nextTransitions.size();
             }
@@ -49,11 +52,9 @@ public class Model {
     }
 
     public void printStatistics(int iterations) {
-        System.out.println();
         System.out.println("--------------------Statistics--------------------");
-       // System.out.println(" name    " + " min " + " max " + " average ");
         for (var place : places) {
-            place.markersAvarage =(float) place.markersAvarage / iterations;
+            place.markersAvarage = (float) place.markersAvarage / iterations;
             System.out.println(" name " + place.name + "      min = " + place.markersMin + " max = " + place.markersMax + " average  = " + place.markersAvarage);
         }
     }
