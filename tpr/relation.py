@@ -340,7 +340,7 @@ def berezovskiy(sigma_vectors):
     for i in range(0, len(result_matrix)):
         for j in range(0, len(result_matrix)):
             if iter1_p[i][j] == 0 and iter1_i[i][j] == 0:
-                iter1_n[i][j] == 1
+                iter1_n[i][j] = 1
     # Формуємо Pb2 (результат) порівнюючи I03, P03, N03 з Pb1, Ib1, Nb1
     for i in range(0, len(result_matrix)):
         for j in range(0, len(result_matrix)):

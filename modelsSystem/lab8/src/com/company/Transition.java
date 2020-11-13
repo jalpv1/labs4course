@@ -3,7 +3,6 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Transition {
     public List<Arc> arcsInComming = new ArrayList<>();
@@ -15,57 +14,49 @@ public class Transition {
         this.name = name;
     }
 
+
     public boolean canTransit(List<Place> places) {
         boolean canTransit = true;
-        List<String> fromPlaceNames = arcsInComming.stream()
-                .map(x -> x.placeFrom.name)
-                .collect(Collectors.toList());
-        List<Place> connectedPlaces = places.stream()
-                .filter(x -> fromPlaceNames.contains(x.name))
-                .collect(Collectors.toList());
+        List<Place> connectedPlaces = findConnected(places);
         for (int i = 0; i < connectedPlaces.size(); i++) {
             if (connectedPlaces.get(i).markersCount < arcsInComming.get(i).multiplicity) {
                 canTransit = false;
                 break;
             }
         }
-//        List<Place> canTransitPlaces =connectedPlaces.stream()
-//                .filter(x-> x.markersCount>arcsInComming.get(arcsInComming.indexOf(x)).multiplicity).collect(Collectors.toList());
-//
-         return canTransit;
+        return canTransit;
     }
 
-    public List<Place> doTransition(List<Place> places, boolean doVerification) {
-        if (doVerification) {
-            System.out.println("Transition " + name + " :");
-            System.out.println("Takes markers from: ");
-        }
+    List<Place> findConnected(List<Place> places) {
+        List<String> fromPlaceNames = arcsInComming.stream()
+                .map(x -> x.placeFrom.title)
+                .collect(Collectors.toList());
+        return places.stream()
+                .filter(x -> fromPlaceNames.contains(x.title))
+                .collect(Collectors.toList());
+    }
 
+    public List<Place> doTransition(List<Place> places) {
         for (Arc arc : arcsInComming) {
             places.stream()
-                    .filter(x -> x.name.equals(arc.placeFrom.name))
+                    .filter(x -> x.title.equals(arc.placeFrom.title))
                     .collect(Collectors.toList())
                     .get(0)
                     .markersCount -= arc.multiplicity;
-            if (doVerification)
-                System.out.print(arc.placeFrom.name);
+            System.out.print("arc place from : " + arc.placeFrom.title);
         }
 
-        if (doVerification)
-            System.out.println("Sends markers to: ");
+         System.out.println("Sends markers to: ");
 
         for (Arc arc : arcsOutComming) {
             places.stream()
-                    .filter(x -> x.name.equals(arc.placeTo.name))
+                    .filter(x -> x.title.equals(arc.placeTo.title))
                     .collect(Collectors.toList())
                     .get(0)
                     .markersCount += arc.multiplicity;
-            if (doVerification)
-                System.out.print(arc.placeTo.name);
-        }
 
-        if (doVerification)
-            System.out.println();
+             System.out.print("arc place to : " + arc.placeTo.title);
+        }
         return places;
     }
 }
