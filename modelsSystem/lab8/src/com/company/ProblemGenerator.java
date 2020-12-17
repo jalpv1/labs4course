@@ -142,7 +142,51 @@ public class ProblemGenerator {
         System.out.println();
         System.out.println("Avg markers in buffer: " + buffer.markersAvg);
     }
+    public static void Prodlem4(int maxBuffer) {
+        Transition transition1 = new Transition("incomming");
+        Transition transition2 = new Transition("go to oven");
+        Transition transition3 = new Transition("baking");
 
+        Place place1 = new Place("incomming", 1);
+        Place place2 = new Place("queue", 0);
+        Place place3 = new Place("oven", 0);
+        Place place4 = new Place("baking", 0);
+        Place place5 = new Place("exit", 0);
+
+
+        Arc incommingInc = new Arc("incommingInc", place1, transition1, 1);
+        Arc incomming = new Arc("incomming", place1, 1);
+        Arc incommingQueue = new Arc("incomming transition to Queue", place2, 1);
+
+        Arc queueToOvenTransition = new Arc("from queue to oven transition ", place2, transition2, 1);
+        Arc fromOvenTransitionToOven = new Arc("from oven transition to oven transition ", place3, 1);
+
+        Arc ovenToExit = new Arc(" from oven to exit transition", place3, transition3, 1);
+        Arc toExit = new Arc(" to exit ", place5,1);
+
+//        Arc queueOven = new Arc("from queue to oven", place2, transition3, 1);
+//        Arc oven = new Arc(" to oven", place3, 1);
+//        Arc ovenToBaking = new Arc(" to oven", place3, 1);
+//        Arc ovenToExit = new Arc(" to exit transition", place3, transition3,1);
+//        Arc toExit = new Arc(" to exit ", place4,1);
+
+        transition1.arcsInComming.add(incommingInc);
+        transition1.arcsOutComming.add(incommingQueue);
+        transition1.arcsOutComming.add(incomming);
+
+        transition2.arcsInComming.add(queueToOvenTransition);
+        transition2.arcsOutComming.add(fromOvenTransitionToOven);
+
+        transition3.arcsInComming.add(ovenToExit);
+        transition3.arcsOutComming.add(toExit);
+
+
+        List<Place> places = new ArrayList<>(Arrays.asList(place1, place2, place3, place5));
+        List<Transition> transitions = new ArrayList<>(Arrays.asList(transition1, transition2,transition3));
+
+        Model model = new Model(places, transitions);
+        model.simulate(100);
+    }
     public static void Problem3(int resourceAmount) {
         Transition type1Create = new Transition("Create1");
         Transition type1Process = new Transition("Process1");
