@@ -1,6 +1,6 @@
 #%%
 import numpy as np
-import math
+Simport math
 alternatives = [[9 , 3,  3 , 7,  7 , 3 , 2 , 9,  7 , 6 , 9 , 10 ] ,
  [1 , 5,  10 , 4,  5 , 6 , 5 , 10  ,10 , 4 , 6,  7]  ,
  [9  ,4 ,3 , 6 , 4 , 4 , 8 , 3,  6 , 6,  8 , 9 ] ,

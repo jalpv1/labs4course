@@ -48,44 +48,44 @@ d = 0.356
 #%%
 
 # підрахунок max(Wj|aj-bj|)
-def countDiff_ai_bi(alternatives_matrix, weights_array):
-    alt = np.array(alternatives_matrix)
-    weights = np.array(weights_array)
-    diffs_ai_bi = []
+def countDiffAiBi(alternatives, weightsa):
+    alt = np.array(alternatives)
+    weights = np.array(weightsa)
+    diffsAiBi = []
     for i in range(0, len(alt[0, :])):
-        diffs_ai_bi.append(weights[i] * (np.amax(alt[:, i]) - np.amin(alt[:, i])))
-    return diffs_ai_bi
+        diffsAiBi.append(weights[i] * (np.amax(alt[:, i]) - np.amin(alt[:, i])))
+    return diffsAiBi
 
 
 # сума Pij(+) та Pij(=)
-def sum_ij(a1, a2, weights_array):
-    result_sum = 0
+def sum_ij(a1, a2, weights):
+    res = 0
     for i in range(0, len(a1)):
         if a1[i] >= a2[i]:
-            result_sum += weights_array[i]
-    return result_sum
+            res += weights[i]
+    return res
 
 
 # формування матриці с
-def c_matrix(alternatives_matrix, weights_array):
-    result_matrix = [[0] * 15 for i in range(15)]
-    weights_sum = np.sum(weights_array)
+def c_matrix(alternatives, weights):
+    res = [[0] * 15 for i in range(15)]
+    weightsSum = np.sum(weights)
     for i in range(0, 15):
         for j in range(0, 15):
             if i != j:
-                result_matrix[i][j] = sum_ij(alternatives_matrix[i], alternatives_matrix[j],
-                                             weights_array) / weights_sum
-    return result_matrix
+                res[i][j] = sum_ij(alternatives[i], alternatives[j],
+                                             weights) / weightsSum
+    return res
 
 
 # підрахунок dij
-def d_ij(a1, a2, weights_array, diffs_ai_bi):
+def d_ij(a1, a2, weights, diffs_ai_bi):
     diffs = []
     selected_diffs_ai_bi = []
     for i in range(0, len(a1)):
         if a1[i] < a2[i]:
             # обчислюємо Wj|xj-yj|
-            diffs.append(weights_array[i] * (a2[i] - a1[i]))
+            diffs.append(weights[i] * (a2[i] - a1[i]))
             selected_diffs_ai_bi.append(diffs_ai_bi[i])
             # max{Wj|xj-yj|}/max{Wj|aj-bj|}
     try:
@@ -97,7 +97,7 @@ def d_ij(a1, a2, weights_array, diffs_ai_bi):
 # формування матриці d
 def d_matrix(alternatives_matrix, weights_array):
     result_matrix = [[1] * 15 for i in range(15)]
-    diffs_ai_bi = countDiff_ai_bi(alternatives_matrix, weights_array)
+    diffs_ai_bi = countDiffAiBi(alternatives_matrix, weights_array)
     for i in range(0, 15):
         for j in range(0, 15):
             if i != j:
