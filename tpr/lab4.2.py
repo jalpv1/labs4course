@@ -2,7 +2,7 @@
 
 import numpy as np
 from itertools import groupby
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 #%%
 # alternatives = [[ 9, 3, 3, 7, 7, 3, 2, 9, 7, 6, 9, 10],
@@ -25,26 +25,25 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 
-alternatives = [[9 , 3,  3 , 7,  7 , 3 , 2 , 9,  7 , 6 , 9 , 10 ] ,
- [1 , 5,  10 , 4,  5 , 6 , 5 , 10  ,10 , 4 , 6,  7]  ,
- [9  ,4 ,3 , 6 , 4 , 4 , 8 , 3,  6 , 6,  8 , 9 ] ,
- [4 , 9 , 9 , 3  ,6 , 9,  7,  7,  4,  1,  7,  4 ] ,
- [10 , 8  ,10 , 10 , 1 , 8 , 5 , 8, 10  ,2  ,5 , 2]  ,
-[2  ,6,  10,  10 , 3 , 8,  2,  10  ,8 , 8,  1,  7 ] ,
- [6 , 5 , 10 , 5 , 2 , 8 , 5 , 3 , 3,  9,  7,  1 ] ,
- [4 , 9 , 5 , 4 , 6  ,10 ,5 , 5,  6 , 4,  1 , 8 ] ,
- [1  ,10,  7,  2,  4 , 1,  2 , 5,  3,  3 , 4 , 4 ] ,
- [10 ,  10  , 9  , 4   ,8   ,3  , 2  , 5  , 1  , 6  , 9 ,  9 ] ,
- [5 ,  2  , 4   ,4  , 6   ,4   ,7 ,  8   ,7  , 8  , 10  , 5 ] ,
- [2  , 5  , 8 ,  4  , 4  , 3  , 4 , 4  , 1  , 7  , 9 ,  2 ] ,
- [3 ,  5   ,7  , 3  , 1 ,  5 ,  1 ,  8  , 9  , 3   ,8 ,  2 ] ,
- [10  , 2   ,10 ,  4  , 6  , 2  , 2  , 10  , 10 ,  4  , 5 ,  7 ] ,
- [10  , 6  , 9   ,8   ,5  , 6  , 5 ,  3 ,  8  , 6  , 9  , 9 ]]
-weights = [ 6, 3, 7, 6, 7, 2, 6, 2, 5, 2, 3, 7]
+alternatives =[[5,  3 , 1 , 5,  9 , 1 , 7,  9,  2 , 9 , 4, 1] ,
+[ 2,  2,  5 , 4 , 4,  6,  1 , 10,  8,  6 , 9 , 8] ,
+ [5 , 9 , 2 , 9  ,1 , 5, 7 , 2 , 6 , 7,  6,  6],
+ [7 , 6 ,6  ,2  ,2,  9 , 3 , 8 , 5  ,10 , 3,  6],
+ [6 , 2  ,1 , 8 , 1  ,10 , 6 ,9 , 8  ,6 , 7,  1],
+ [9  ,5  ,5 , 5 , 10 , 6  ,3  ,9  ,2 , 7,  1 , 7],
+ [8  ,2  ,6 , 8 , 10  ,1 , 8 , 2  ,7,  2  ,4,  8] ,
+ [10 , 10,  4 ,4 , 8 , 9,  4 , 6 , 7,  2, 7 , 8],
+ [9 , 10  ,3 , 5,  10  ,6  ,3,  6 , 4,  2 , 3,  5] ,
+ [1 , 9  ,7 , 7 , 6 , 1 , 5 , 8 , 1  ,6 ,6  ,2 ],
+ [4 , 10  ,9 , 9,  2 , 1 ,7 , 7  ,5 , 8,  3,  5 ],
+ [4  ,6, 9  ,4  ,9,  8,  3 , 10,  5, 10 , 10 , 3 ],
+ [10,  6, 10,  6 , 6 , 7,  3 , 7 , 3  ,1,  8 , 2],
+ [7 , 3 , 4 , 1 , 5 , 10 , 8 , 8,  7,  4 , 6,  10 ],
+ [2 , 5 , 4 , 9 , 1  ,5  ,9  ,6,  7 , 10 , 1,  1 ]]
+weights = [ 9, 9, 4, 1, 2, 3, 1, 8, 6, 3, 1, 6]
 
-c = 0.657 
-d = 0.356
-
+c = 0.754
+d = 0.481
 #%%
 
 # підрахунок max(Wj|aj-bj|)
@@ -126,8 +125,8 @@ def electre_I(alternatives_matrix, weights_array, c, d):
     C_matrix = np.array(c_matrix(alternatives_matrix, weights_array))
     D_matrix = np.array(d_matrix(alternatives_matrix, weights_array))
     relation_matrix = [[0] * 15 for i in range(15)]
-    write_to_file("c_matrix.txt", C_matrix, True)
-    write_to_file("d_matrix.txt", D_matrix, True)
+    write_to_file("c_matrix2.txt", C_matrix, True)
+    write_to_file("d_matrix2.txt", D_matrix, True)
     R = []
     X = []
     for i in range(0, len(C_matrix)):
@@ -137,7 +136,7 @@ def electre_I(alternatives_matrix, weights_array, c, d):
             if i != j and C_matrix[i][j] >= c and D_matrix[i][j] <= d:
                 relation_matrix[i][j] = 1
                 R.append([i, j])
-    write_to_file("relation_matrix.txt", relation_matrix, False)
+    write_to_file("relation_matrix2.txt", relation_matrix, False)
     # додавання до ядра елементів, які є непорівнюваними (не увійшли до списку, внутрішня стійкість)
     for i in range(0, 15):
         flag = True
@@ -186,22 +185,22 @@ for i in range(0, len(d_values)):
     result = electre_I(alternatives, weights, c_fixed, d_values[i])
     kernels1.append(len(result))
     elements1.append('-'.join(str(e) for e in result))
-
-fig = plt.figure()
-plt.plot(d_values, kernels1)
-plt.xticks(d_values)
-plt.yticks(kernels1)
-plt.title('Вплив d на розмір та склад ядра')
-plt.xlabel("Значення d")
-plt.ylabel("Розмір ядра")
-plt.grid(True)
-for i in range (0, len(elements1)):
-    try:
-        if kernels1[i] != kernels1[i+1]:
-            plt.text(d_values[i], kernels[i], elements1[i])
-    except:
-        plt.text(d_values[i], kernels1[i], elements1[i])
-plt.show()
+#
+# fig = plt.figure()
+# plt.plot(d_values, kernels1)
+# plt.xticks(d_values)
+# plt.yticks(kernels1)
+# plt.title('Вплив d на розмір та склад ядра')
+# plt.xlabel("Значення d")
+# plt.ylabel("Розмір ядра")
+# plt.grid(True)
+# for i in range (0, len(elements1)):
+#     try:
+#         if kernels1[i] != kernels1[i+1]:
+#             plt.text(d_values[i], kernels[i], elements1[i])
+#     except:
+#         plt.text(d_values[i], kernels1[i], elements1[i])
+# plt.show()
 
 #%%
 d_fixed = 0.49
@@ -217,21 +216,21 @@ for i in range(0, len(d_values)):
     kernels2.append(len(result))
     elements2.append('-'.join(str(e) for e in result))
 
-fig = plt.figure()
-plt.plot(c_values, kernels2)
-plt.xticks(c_values)
-plt.yticks(kernels2)
-plt.title('Вплив c на розмір та склад ядра')
-plt.xlabel("Значення c")
-plt.ylabel("Розмір ядра")
-plt.grid(True)
-for i in range (0, len(elements2)):
-    try:
-        if kernels2[i] != kernels2[i+1]:
-            plt.text(c_values[i], kernels2[i], elements2[i])
-    except:
-        plt.text(c_values[i], kernels2[i], elements2[i])
-plt.show()
+# fig = plt.figure()
+# plt.plot(c_values, kernels2)
+# plt.xticks(c_values)
+# plt.yticks(kernels2)
+# plt.title('Вплив c на розмір та склад ядра')
+# plt.xlabel("Значення c")
+# plt.ylabel("Розмір ядра")
+# plt.grid(True)
+# for i in range (0, len(elements2)):
+#     try:
+#         if kernels2[i] != kernels2[i+1]:
+#             plt.text(c_values[i], kernels2[i], elements2[i])
+#     except:
+#         plt.text(c_values[i], kernels2[i], elements2[i])
+# plt.show()
 
 
 #%%
@@ -241,27 +240,24 @@ sorted_c_values.sort(reverse = True)
 kernels3 = []
 # склад ядра
 elements3 = []
-fig = plt.figure()
-plt.title('Вплив одночасної зміни c та d на розмір та склад ядра')
-plt.xlabel("Значення d")
-plt.ylabel("Значення c")
-for i in range(0, len(d_values)):
-    result = electre_I(alternatives, weights, sorted_c_values[i], d_values[i])
-    kernels3.append(len(result))
-    elements3.append('-'.join(str(e) for e in result))
-for i in range (0, len(elements3)):
-    plt.scatter(d_values[i], sorted_c_values[i])
-    # для кожної пари значень (d,c) на графіку вказано склад ядра та кількість його елементів
-    plt.text(d_values[i], sorted_c_values[i], "{0}, num: {1}".format(elements3[i], kernels3[i]))
-plt.grid(True)
-plt.xticks(d_values)
-plt.yticks(sorted_c_values)
-plt.show()
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-plt.title('Вплив одночасної зміни c та d на розмір ядра')
-ax.plot(d_values, sorted_c_values, kernels3)
- 
-
-# %%
+# fig = plt.figure()
+# plt.title('Вплив одночасної зміни c та d на розмір та склад ядра')
+# plt.xlabel("Значення d")
+# plt.ylabel("Значення c")
+# for i in range(0, len(d_values)):
+#     result = electre_I(alternatives, weights, sorted_c_values[i], d_values[i])
+#     kernels3.append(len(result))
+#     elements3.append('-'.join(str(e) for e in result))
+# for i in range (0, len(elements3)):
+#     plt.scatter(d_values[i], sorted_c_values[i])
+#     # для кожної пари значень (d,c) на графіку вказано склад ядра та кількість його елементів
+#     plt.text(d_values[i], sorted_c_values[i], "{0}, num: {1}".format(elements3[i], kernels3[i]))
+# plt.grid(True)
+# plt.xticks(d_values)
+# plt.yticks(sorted_c_values)
+# plt.show()
+#
+# fig = plt.figure()
+# ax = fig.add_subplot(111, projection='3d')
+# plt.title('Вплив одночасної зміни c та d на розмір ядра')
+# ax.plot(d_values, sorted_c_values, kernels3)

@@ -1,0 +1,68 @@
+E:\Documents\labs4course\tpr\venv\Scripts\python.exe E:/Documents/labs4course/tpr/lab2.py
+size of R: 10
+____R0____
+Graph has no cycle
+Morgenstern Optimizaion:{2, 13, 8}
+____R1____
+Graph has a cycle
+K - optimization
+k = 1 
+max: [ 1.  4.  6.  9. 10. 15.]
+opt: [ 1.  4.  6.  9. 10. 15.]
+k = 2 
+max: [ 1.  4.  6.  9. 10. 15.]
+opt: []
+k = 3 
+max:[ 1.  4.  6.  9. 10. 15.]
+opt:[ 1.  4.  6.  9. 10. 15.]
+k = 4 
+max: []
+opt: []
+____R2____
+Graph has no cycle
+Morgenstern Optimizaion:{1, 4, 15, 8}
+____R3____
+Graph has no cycle
+Morgenstern Optimizaion:{1, 9, 3, 11}
+____R4____
+Graph has no cycle
+Morgenstern Optimizaion:{1, 2, 8}
+____R5____
+Graph has a cycle
+K - optimization
+k = 1 
+max: [ 3.  8.  9. 11. 15.]
+opt: [ 3.  8.  9. 11. 15.]
+k = 2 
+max: [ 3.  9. 15.]
+opt: [ 3.  9. 15.]
+k = 3 
+max:[]
+opt:[]
+k = 4 
+max: []
+opt: []
+____R6____
+Graph has no cycle
+Morgenstern Optimizaion:{2, 11, 5}
+____R7____
+Graph has no cycle
+Morgenstern Optimizaion:{9, 12, 5}
+____R8____
+Graph has no cycle
+Morgenstern Optimizaion:{2, 3, 7}
+____R9____
+Graph has a cycle
+K - optimization
+k = 1 
+max: [ 6.  7.  8.  9. 11. 13.]
+opt: [ 6.  7.  8.  9. 11. 13.]
+k = 2 
+max: [ 6.  7.  8.  9. 11. 13.]
+opt: []
+k = 3 
+max:[ 6.  7.  8.  9. 11. 13.]
+opt:[ 6.  7.  8.  9. 11. 13.]
+k = 4 
+max: []
+opt: []
